@@ -102,7 +102,7 @@ function isThisPostANewEvent
                         $likelyGameShop = (CountItemsInString -InputString $post.selftext -Items $gameStoreList | where {$_.count -gt 0})[0].item.tostring()
 
                         # add ellipses if post is longer than discord limit
-                        if ($Post.Selftext.count -gt 1024) { $textPostfix = "..." } else { $textPostfix = "" }
+                        if ($Post.Selftext.count -gt 1020) { $textPostfix = "..." } else { $textPostfix = "" }
 
                         # Generate the body hashtable and conver to JSON to send to webhook
                         $jsonBody = @{
