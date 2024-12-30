@@ -101,6 +101,9 @@ function isThisPostANewEvent
                         $likelySuburb = (CountItemsInString -InputString $post.selftext -Items $suburbList | where {$_.count -gt 0})[0].item.tostring()
                         $likelyGameShop = (CountItemsInString -InputString $post.selftext -Items $gameStoreList | where {$_.count -gt 0})[0].item.tostring()
 
+                        # add ellipses if post is longer than discord limit
+                        if ($Post.Selftext.count -gt 1024) { $textPostfix = "..." } else { $textPostfix = "" }
+
                         # Generate the body hashtable and conver to JSON to send to webhook
                         $jsonBody = @{
                             embeds = @(
@@ -126,7 +129,7 @@ function isThisPostANewEvent
                                             @{
                                              # Each of these field values is limited to 1024 characters
                                                 name = "Post Text"
-                                                value =$($Post.Selftext[0..1020] -join "") + "..."
+                                                value =$($Post.Selftext[0..1020] -join "") + $textPostfix
 
                                         })
 
